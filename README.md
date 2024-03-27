@@ -1,4 +1,4 @@
-# Pet tracker service
+# Pet tracker service [![Java CI with Gradle](https://github.com/sekury/pet-tracker/actions/workflows/gradle.yml/badge.svg?branch=main)](https://github.com/sekury/pet-tracker/actions/workflows/gradle.yml) ![Coverage](.github/badges/jacoco.svg) ![Branches](.github/badges/branches.svg)
 ## Requirements
 - Java 21
 
