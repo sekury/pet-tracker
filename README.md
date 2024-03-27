@@ -69,7 +69,7 @@ curl -X GET --location "http://localhost:8080/api/v1/trackers/1"
 ```
 curl -X GET --location "http://localhost:8080/api/v1/trackers?page=0&size=10&sort=ownerId%2Cdesc"
 ```
-### Get trackers stats
+### Get trackers statistics (returns the number of trackers outside the power safe zone)
 ```
 curl -X GET --location "http://localhost:8080/api/v1/trackers/stats"
 ```
