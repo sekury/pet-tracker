@@ -29,5 +29,5 @@ public abstract class Pet {
 
     @Column(name = "in_zone", nullable = false)
     @NotNull
-    private Boolean inZone; // TODO consider bitmap index
+    private Boolean inZone;
 }
