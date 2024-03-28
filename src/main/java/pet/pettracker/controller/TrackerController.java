@@ -8,8 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pet.pettracker.model.dto.TrackerDto;
-import pet.pettracker.model.dto.TrackersStats;
+import pet.pettracker.model.dto.TrackerTypeCountDto;
+import pet.pettracker.model.dto.TrackersStatsDto;
 import pet.pettracker.service.PetTrackerService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/trackers")
@@ -21,7 +24,7 @@ public class TrackerController {
     @GetMapping(
             path = "stats",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public TrackersStats getStatistics() {
+    public TrackersStatsDto getStatistics() {
         return petTrackerService.getStatistics();
     }
 
@@ -29,7 +32,7 @@ public class TrackerController {
             path = "{id}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public TrackerDto getTracker(@PathVariable("id") long id) {
+    public TrackerDto getTracker(@PathVariable("id") String id) {
         return petTrackerService.getTracker(id);
     }
 
@@ -52,13 +55,13 @@ public class TrackerController {
             path = "{id}",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public TrackerDto updateTracker(@PathVariable("id") long id, @RequestBody @Valid TrackerDto request) {
+    public TrackerDto updateTracker(@PathVariable("id") String id, @RequestBody @Valid TrackerDto request) {
         return petTrackerService.updateTracker(id, request);
     }
 
     @DeleteMapping(path = "{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteTracker(@PathVariable("id") long id) {
+    public void deleteTracker(@PathVariable("id") String id) {
         petTrackerService.deleteTracker(id);
     }
 

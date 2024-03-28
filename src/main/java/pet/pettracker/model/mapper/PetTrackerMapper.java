@@ -3,12 +3,12 @@ package pet.pettracker.model.mapper;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+import pet.pettracker.model.document.Cat;
+import pet.pettracker.model.document.Dog;
+import pet.pettracker.model.document.Pet;
 import pet.pettracker.model.dto.CatTrackerDto;
 import pet.pettracker.model.dto.DogTrackerDto;
 import pet.pettracker.model.dto.TrackerDto;
-import pet.pettracker.model.entity.Cat;
-import pet.pettracker.model.entity.Dog;
-import pet.pettracker.model.entity.Pet;
 
 @Component
 @RequiredArgsConstructor
@@ -50,7 +50,6 @@ public class PetTrackerMapper {
         return switch (pet) {
             case Cat ignored -> CatTrackerDto.class;
             case Dog ignored -> DogTrackerDto.class;
-            default -> throw new IllegalStateException("Unexpected pet type: " + pet);  // can't use sealed classes with hibernate proxy :(
         };
     }
 }

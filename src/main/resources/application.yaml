@@ -24,7 +24,18 @@ spring:
   h2:
     console:
       enabled: true
-
+  data:
+    mongodb:
+      password: a
+      username: mongo
+      host: localhost
+      database: tracker
+      port: 27017
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 7.0.4
 ---
 spring:
   config:

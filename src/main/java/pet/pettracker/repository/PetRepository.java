@@ -1,9 +1,10 @@
 package pet.pettracker.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import pet.pettracker.model.entity.Pet;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import pet.pettracker.model.document.Pet;
 
-public interface PetRepository extends JpaRepository<Pet, Long> {
+import java.util.Optional;
 
-
+public interface PetRepository extends MongoRepository<Pet, String> {
+    Optional<Pet> findPetDocumentById(String id);
 }

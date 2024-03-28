@@ -3,12 +3,12 @@ package pet.pettracker.model.mapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
+import pet.pettracker.model.document.Cat;
+import pet.pettracker.model.document.Dog;
+import pet.pettracker.model.document.Pet;
 import pet.pettracker.model.dto.CatTrackerDto;
 import pet.pettracker.model.dto.DogTrackerDto;
 import pet.pettracker.model.dto.TrackerDto;
-import pet.pettracker.model.entity.Cat;
-import pet.pettracker.model.entity.Dog;
-import pet.pettracker.model.entity.Pet;
 
 import java.util.stream.Stream;
 

@@ -1,4 +1,5 @@
 # Pet tracker service [![Java CI with Gradle](https://github.com/sekury/pet-tracker/actions/workflows/gradle.yml/badge.svg?branch=main)](https://github.com/sekury/pet-tracker/actions/workflows/gradle.yml) ![Coverage](.github/badges/jacoco.svg) ![Branches](.github/badges/branches.svg)
+# Disclaimer: migration to mongo is in progress!
 ## Requirements
 - Java 21
 

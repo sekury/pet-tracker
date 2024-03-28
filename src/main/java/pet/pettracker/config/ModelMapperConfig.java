@@ -4,10 +4,10 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import pet.pettracker.model.document.Cat;
+import pet.pettracker.model.document.Dog;
 import pet.pettracker.model.dto.CatTrackerDto;
 import pet.pettracker.model.dto.DogTrackerDto;
-import pet.pettracker.model.entity.Cat;
-import pet.pettracker.model.entity.Dog;
 
 @Configuration
 public class ModelMapperConfig {

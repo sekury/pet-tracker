@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 public abstract sealed class TrackerDto permits CatTrackerDto, DogTrackerDto {
 
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private Long id;
+    private String id;
 
     @NotNull
     private Long ownerId;
