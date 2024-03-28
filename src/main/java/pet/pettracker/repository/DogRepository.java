@@ -2,12 +2,12 @@ package pet.pettracker.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import pet.pettracker.model.entity.Cat;
+import pet.pettracker.model.entity.Dog;
 import pet.pettracker.model.projection.DogCountProjection;
 
 import java.util.List;
 
-public interface DogRepository extends JpaRepository<Cat, Long> {
+public interface DogRepository extends JpaRepository<Dog, Long> {
 
     @Query("""
             select new pet.pettracker.model.projection.DogCountProjection(d.trackerType, count(d))
