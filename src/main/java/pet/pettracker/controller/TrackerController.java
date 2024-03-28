@@ -8,11 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import pet.pettracker.model.dto.TrackerDto;
-import pet.pettracker.model.dto.TrackerTypeCountDto;
 import pet.pettracker.model.dto.TrackersStatsDto;
 import pet.pettracker.service.PetTrackerService;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/trackers")

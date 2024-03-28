@@ -16,11 +16,11 @@ public class PetTrackerMapper {
 
     private final ModelMapper modelMapper;
 
-    public Pet mapToEntity(TrackerDto tracker) {
+    public Pet<?> mapToEntity(TrackerDto tracker) {
         return modelMapper.map(tracker, inferPetClass(tracker));
     }
 
-    public TrackerDto mapToDto(Pet pet) {
+    public TrackerDto mapToDto(Pet<?> pet) {
         return modelMapper.map(pet, inferTrackerClass(pet));
     }
 
@@ -31,7 +31,7 @@ public class PetTrackerMapper {
      * @param pet
      * @throws IllegalArgumentException if {@code tracker} and {@code pet} have incompatible types or are null
      */
-    public void mapToEntity(TrackerDto tracker, Pet pet) {
+    public void mapToEntity(TrackerDto tracker, Pet<?> pet) {
         if (inferPetClass(tracker).isInstance(pet)) {
             modelMapper.map(tracker, pet);
             return;
@@ -39,14 +39,14 @@ public class PetTrackerMapper {
         throw new IllegalArgumentException("Unexpected pet type: " + pet);
     }
 
-    protected Class<? extends Pet> inferPetClass(TrackerDto tracker) {
+    protected Class<? extends Pet<?>> inferPetClass(TrackerDto tracker) {
         return switch (tracker) {
             case CatTrackerDto ignored -> Cat.class;
             case DogTrackerDto ignored -> Dog.class;
         };
     }
 
-    protected Class<? extends TrackerDto> inferTrackerClass(Pet pet) {
+    protected Class<? extends TrackerDto> inferTrackerClass(Pet<?> pet) {
         return switch (pet) {
             case Cat ignored -> CatTrackerDto.class;
             case Dog ignored -> DogTrackerDto.class;

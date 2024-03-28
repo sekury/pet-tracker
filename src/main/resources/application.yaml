@@ -1,7 +1,7 @@
 spring:
   application.name: pet-tracker
   profiles:
-    active: h2
+    active: embedded
   threads:
     virtual:
       enabled: true
@@ -10,20 +10,7 @@ spring:
 spring:
   config:
     activate:
-      on-profile: h2
-  datasource:
-    url: jdbc:h2:mem:pet_tracker_db
-    driver-class-name: org.h2.Driver
-    username: sa
-    password:
-  jpa:
-    database: h2
-    show-sql: true
-    hibernate:
-      ddl-auto: update
-  h2:
-    console:
-      enabled: true
+      on-profile: embedded
   data:
     mongodb:
       password: a
@@ -41,8 +28,14 @@ spring:
   config:
     activate:
       on-profile: test
-  sql:
-    init:
-      mode: never
-  jpa:
-    show-sql: true
+  data:
+    mongodb:
+      password: a
+      username: mongo
+      host: localhost
+      database: tracker
+de:
+  flapdoodle:
+    mongodb:
+      embedded:
+        version: 7.0.4

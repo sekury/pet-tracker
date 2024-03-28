@@ -6,7 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.aggregation.*;
+import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -30,13 +30,22 @@ public class PetTrackerService {
     public TrackersStatsDto getStatistics() {
         log.info("Getting trackers statistics");
 
-        MatchOperation matchOperation = Aggregation.match(new Criteria("inZone").is(false));
-        GroupOperation groupOperation = Aggregation.group("petType", "trackerType").count().as("numOfTrackers");
-        SortOperation sortOperation = Aggregation.sort(Sort.by("petType", "trackerType"));
-        ProjectionOperation projectionOperation = Aggregation.project("numOfTrackers", "petType", "trackerType").andExclude("_id");
-        Aggregation aggregation = Aggregation.newAggregation(matchOperation, groupOperation, sortOperation, projectionOperation);
+        var matchOperation = Aggregation.match(new Criteria("inZone").is(false));
 
-        return new TrackersStatsDto(mongoTemplate.aggregateStream(aggregation, "pet", TrackerTypeCountDto.class).toList());
+        var groupOperation = Aggregation.group(Pet.Fields.petType, Pet.Fields.trackerType)
+                .count()
+                .as(TrackerTypeCountDto.Fields.numOfTrackers);
+
+        var sortOperation = Aggregation.sort(Sort.by(Pet.Fields.petType, Pet.Fields.trackerType));
+
+        var projectionOperation = Aggregation.project(
+                        TrackerTypeCountDto.Fields.numOfTrackers, Pet.Fields.petType, Pet.Fields.trackerType)
+                .andExclude("_id");
+
+        var aggregation = Aggregation.newAggregation(matchOperation, groupOperation, sortOperation, projectionOperation);
+
+        return new TrackersStatsDto(
+                mongoTemplate.aggregateStream(aggregation, Pet.class, TrackerTypeCountDto.class).toList());
     }
 
     public TrackerDto getTracker(String id) {
@@ -67,12 +76,12 @@ public class PetTrackerService {
         repository.delete(findById(id));
     }
 
-    private Pet findById(String id) {
-        return repository.findPetDocumentById(id).orElseThrow(() ->
+    private Pet<?> findById(String id) {
+        return repository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Tracker not found"));
     }
 
-    private Pet updatePet(TrackerDto request, Pet pet) {
+    private Pet<?> updatePet(TrackerDto request, Pet<?> pet) {
         try {
             mapper.mapToEntity(request, pet);
             return repository.save(pet);

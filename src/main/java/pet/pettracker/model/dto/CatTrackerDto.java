@@ -3,7 +3,6 @@ package pet.pettracker.model.dto;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
-import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Super;
 import pet.pettracker.model.enums.CatTrackerType;
 
 @Data
