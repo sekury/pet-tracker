@@ -1,4 +1,9 @@
 # Pet tracker service [![Java CI with Gradle](https://github.com/sekury/pet-tracker/actions/workflows/gradle.yml/badge.svg?branch=main)](https://github.com/sekury/pet-tracker/actions/workflows/gradle.yml) ![Coverage](.github/badges/jacoco.svg) ![Branches](.github/badges/branches.svg)
+
+Implemented using H2 database.
+
+The MongoDB version is also available in a separate [branch](https://github.com/sekury/pet-tracker/tree/mongo).
+
 ## Requirements
 - Java 21
 

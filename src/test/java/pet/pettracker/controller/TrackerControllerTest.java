@@ -240,7 +240,7 @@ class TrackerControllerTest {
     }
 
     @Test
-    public void givenNoPet_whenUpdateCatTracker_thenUpdateCat() throws Exception {
+    public void givenNoPet_whenUpdateCatTracker_thenCatNotFound() throws Exception {
         var request = """
                 {"petType":"cat","ownerId":1,"inZone":true,"trackerType":"s","lostTracker":true}
                 """;
