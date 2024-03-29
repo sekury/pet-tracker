@@ -1,5 +1,10 @@
 package pet.pettracker.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,6 +23,12 @@ public class TrackerController {
 
     private final PetTrackerService petTrackerService;
 
+    @Operation(summary = "Calculates number of trackers outside the power safe zone, grouped by tracker type")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "500", description = "Internal server error",
+                    content = @Content(schema = @Schema(hidden = true)))
+    })
     @GetMapping(
             path = "stats",
             produces = MediaType.APPLICATION_JSON_VALUE)
