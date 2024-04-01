@@ -14,6 +14,8 @@ ext {
 
 libraryVersions.lombok = '1.18.32'
 libraryVersions.modelmapper = '3.2.0'
+libraryVersions.openApi = '2.4.0'
+libraryVersions.mongo = '4.12.2'
 
 java {
 	sourceCompatibility = '21'
@@ -28,16 +30,18 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.4.0'
+	implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${libraryVersions.openApi}"
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-aop'
+	implementation "org.modelmapper:modelmapper:${libraryVersions.modelmapper}"
+	implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+	implementation 'io.opentelemetry:opentelemetry-exporter-zipkin'
 
 	compileOnly "org.projectlombok:lombok:${libraryVersions.lombok}"
 	annotationProcessor "org.projectlombok:lombok:${libraryVersions.lombok}"
-	implementation "org.modelmapper:modelmapper:${libraryVersions.modelmapper}"
 	runtimeOnly 'io.micrometer:micrometer-registry-prometheus'
 
-	implementation 'de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring3x:4.12.2'
+	implementation "de.flapdoodle.embed:de.flapdoodle.embed.mongo.spring3x:${libraryVersions.mongo}"
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'

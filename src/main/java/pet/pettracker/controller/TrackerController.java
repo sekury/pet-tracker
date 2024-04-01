@@ -1,6 +1,5 @@
 package pet.pettracker.controller;
 
-import io.micrometer.core.annotation.Timed;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,7 +32,6 @@ public class TrackerController {
     @GetMapping(
             path = "stats",
             produces = MediaType.APPLICATION_JSON_VALUE)
-    @Timed(value = "trackers.statistics.time", description = "Time taken to return trackers statistics")
     public TrackersStatsDto getStatistics() {
         return petTrackerService.getStatistics();
     }

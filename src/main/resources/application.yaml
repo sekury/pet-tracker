@@ -10,6 +10,12 @@ management:
     web:
       exposure:
         include: [ "prometheus" ]
+  tracing:
+    sampling:
+      probability: 1.0
+  observations:
+    annotations:
+      enabled: true
 
 ---
 spring:
@@ -23,6 +29,9 @@ spring:
       host: localhost
       database: tracker
       port: 27017
+logging:
+  level:
+    de.flapdoodle.embed.mongo.spring.autoconfigure.EmbeddedMongo: WARN
 de:
   flapdoodle:
     mongodb:

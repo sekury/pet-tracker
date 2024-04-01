@@ -1,5 +1,8 @@
 package pet.pettracker.service;
 
+import io.micrometer.core.annotation.Timed;
+import io.micrometer.tracing.annotation.NewSpan;
+import io.micrometer.tracing.annotation.SpanTag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -27,6 +30,8 @@ public class PetTrackerService {
     private final PetRepository repository;
     private final MongoTemplate mongoTemplate;
 
+    @NewSpan("getTrackerStats")
+    @Timed(value = "trackers.statistics.time", description = "Time taken to calculate trackers statistics")
     public TrackersStatsDto getStatistics() {
         log.info("Getting trackers statistics");
 
@@ -48,35 +53,41 @@ public class PetTrackerService {
                 mongoTemplate.aggregateStream(aggregation, Pet.class, TrackerTypeCountDto.class).toList());
     }
 
-    public TrackerDto getTracker(String id) {
+    @NewSpan("getTracker")
+    public TrackerDto getTracker(@SpanTag("trackerId") String id) {
         log.info("Getting tracker: {}", id);
         var pet = findById(id);
         return mapper.mapToDto(pet);
     }
 
-    public Page<TrackerDto> getTrackers(Pageable pageable) {
+    @NewSpan("getTrackers")
+    public Page<TrackerDto> getTrackers(@SpanTag("page") Pageable pageable) {
         log.info("Getting trackers: {}", pageable);
         return repository.findAll(pageable).map(mapper::mapToDto);
     }
 
+    @NewSpan("createTracker")
     public TrackerDto createTracker(TrackerDto request) {
         log.info("Creating tracker: {}", request);
         var pet = repository.save(mapper.mapToEntity(request));
         return mapper.mapToDto(pet);
     }
 
-    public TrackerDto updateTracker(String id, TrackerDto request) {
+    @NewSpan("updateTracker")
+    public TrackerDto updateTracker(@SpanTag("trackerId") String id, TrackerDto request) {
         log.info("Updating tracker: {}, {}", id, request);
         var pet = updatePet(request, findById(id));
         return mapper.mapToDto(pet);
     }
 
-    public void deleteTracker(String id) {
+    @NewSpan("deleteTracker")
+    public void deleteTracker(@SpanTag("trackerId") String id) {
         log.info("Deleting tracker with id: {}", id);
         repository.delete(findById(id));
     }
 
     private Pet<?> findById(String id) {
+        log.info("Finding pet with id: {}", id);
         return repository.findById(id).orElseThrow(() ->
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Tracker not found"));
     }
