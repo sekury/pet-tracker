@@ -11,8 +11,13 @@ import pet.pettracker.model.dto.TrackerDto;
 import pet.pettracker.model.dto.TrackerZoneStats;
 import pet.pettracker.model.dto.TrackersStats;
 import pet.pettracker.model.entity.Pet;
+import pet.pettracker.model.enums.CatTrackerType;
+import pet.pettracker.model.enums.DogTrackerType;
 import pet.pettracker.model.mapper.PetTrackerMapper;
 import pet.pettracker.repository.PetRepository;
+
+import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Slf4j
 @Service
@@ -26,11 +31,14 @@ public class PetTrackerService {
 
     public TrackersStats getStatistics() {
         log.info("Getting trackers statistics");
+        CompletableFuture<Map<CatTrackerType, Long>> catsOutsideFuture = catTrackerService.getCountOutsideZone();
+        CompletableFuture<Map<DogTrackerType, Long>> dogsOutsideFuture = dogTrackerService.getCountOutsideZone();
+        CompletableFuture.allOf(catsOutsideFuture, dogsOutsideFuture).join();
+
         return new TrackersStats(
                 new TrackerZoneStats(
-                        catTrackerService.getCountOutsideZone().join(),
-                        dogTrackerService.getCountOutsideZone().join()
-                ));
+                        catsOutsideFuture.join(),
+                        dogsOutsideFuture.join()));
     }
 
     public TrackerDto getTracker(long id) {

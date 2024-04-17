@@ -21,7 +21,7 @@ public class DogTrackerService {
 
     @Async
     public CompletableFuture<Map<DogTrackerType, Long>> getCountOutsideZone() {
-        log.error("Getting dogs outside power safe zone");
+        log.info("Getting dogs outside power safe zone");
         var map = dogRepository.countByInZoneFalse().stream()
                 .collect(Collectors.toUnmodifiableMap(DogCountProjection::trackerType, DogCountProjection::count));
         return CompletableFuture.completedFuture(map);

@@ -21,7 +21,7 @@ public class CatTrackerService {
 
     @Async
     public CompletableFuture<Map<CatTrackerType, Long>> getCountOutsideZone() {
-        log.error("Getting cats outside power safe zone");
+        log.info("Getting cats outside power safe zone");
         var map = catRepository.countByInZoneFalse().stream()
                 .collect(Collectors.toUnmodifiableMap(CatCountProjection::trackerType, CatCountProjection::count));
         return CompletableFuture.completedFuture(map);
